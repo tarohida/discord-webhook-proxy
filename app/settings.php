@@ -12,15 +12,24 @@ return function (ContainerBuilder $containerBuilder) {
     // Global Settings Object
     $containerBuilder->addDefinitions([
         SettingsInterface::class => function () {
+            if (
+                !isset($_ENV['DISCORD_WEBHOOK_URL'])
+            ) {
+                throw new RuntimeException('必須パラメタが設定されていません');
+            }
+            $production = isset($_ENV['PRODUCTION']);
             return new Settings([
-                'displayErrorDetails' => true, // Should be set to false in production
-                'logError'            => false,
-                'logErrorDetails'     => false,
+                'displayErrorDetails' => $production, // Should be set to false in production
+                'logError' => true,
+                'logErrorDetails' => true,
                 'logger' => [
-                    'name' => 'slim-app',
-                    'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
+                    'name' => $production ? 'production_logger' : 'development_logger',
+                    'path' => 'php://stdout',
                     'level' => Logger::DEBUG,
                 ],
+                'discord' => [
+                    'webhook_url' => $_ENV['DISCORD_WEBHOOK_URL']
+                ]
             ]);
         }
     ]);

@@ -1,36 +1,46 @@
-# Slim Framework 4 Skeleton Application
+# discord-webhook-proxy
 
-[![Coverage Status](https://coveralls.io/repos/github/slimphp/Slim-Skeleton/badge.svg?branch=master)](https://coveralls.io/github/slimphp/Slim-Skeleton?branch=master)
+Discord Webhook にリクエストを送るだけのアプリケーションです。
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 4 application. This application uses the latest Slim 4 with Slim PSR-7 implementation and PHP-DI container implementation. It also uses the Monolog logger.
+(This application just send POST request to discord webhook url.)
 
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+CORS による制限のため、ブラウザ上のアプリケーションから Discord Webhook API にリクエストを送ることはできません。
 
-## Install the Application
+(For CORS, application on browser can't send request to discord webhook.)
 
-Run this command from the directory in which you want to install your new Slim Framework application. You will require PHP 7.4 or newer.
+この PHP アプリケーションは `/webhook/send` エンドポイントで接続を受け、ブラウザ上のアプリケーションの代わりに Discord の Webhook URL にリクエストを送ります。
+
+(Application on browser can use discord webhook api by to send `/webhook/send` endpoint on this PHP backend
+application.)
+
+## How to run
+
+This application create from [Slim Framework 4 Skeleton Application](https://github.com/odan/slim4-skeleton)
+
+`.env` ファイルが必要となるため作成し、適宜パラメタを設定してください。
+
+* DISCORD_WEBHOOK_URL : Discord の Webhook URL です。
+* ALLOW_ORIGIN_URL : ALLOW_ORIGIN_URL です。開発環境で外部からの接続ができない場合は、 `*` を指定していればいいかと思います。
+* PRODUCTION : 本番環境において指定します。この環境変数に何かしら設定があれば、本番環境として扱われます。
+
+You h to create `.env` file.
 
 ```bash
-composer create-project slim/slim-skeleton [my-app-name]
+cp .env.sample .env
 ```
 
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
-
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writable.
-
-To run the application in development, you can run these commands 
+To run the application in development, you can run these commands
 
 ```bash
-cd [my-app-name]
 composer start
 ```
 
 Or you can use `docker-compose` to run the app with `docker`, so you can run these commands:
+
 ```bash
-cd [my-app-name]
 docker-compose up -d
 ```
+
 After that, open `http://localhost:8080` in your browser.
 
 Run this command in the application directory to run the test suite
@@ -40,3 +50,27 @@ composer test
 ```
 
 That's it! Now go build something cool.
+
+## Deploy to AppEngine
+
+GCP App Engine にデプロイすることができます。私は普段、本番環境を App Engine にデプロイしています。
+
+(You can deploy this application to GCP App Engine.)
+
+プロジェクトの設定方法その他については、 [Building an app with PHP 7+  |  App Engine standard environment for PHP docs  |  Google Cloud](https://cloud.google.com/appengine/docs/standard/php-gen2/building-app)
+を参照してください。
+
+(For detail,
+show [Building an app with PHP 7+  |  App Engine standard environment for PHP docs  |  Google Cloud](https://cloud.google.com/appengine/docs/standard/php-gen2/building-app))
+
+`app.yaml` のファイルを作成し、編集する必要があります。
+
+パラメタについては `.env` と同様となります。
+
+```bash
+cp app.sample.yaml app.yaml
+```
+
+```bash
+gcloud app deploy
+```

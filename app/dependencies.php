@@ -3,7 +3,10 @@
 declare(strict_types=1);
 
 use App\Application\Settings\SettingsInterface;
+use App\Domain\DiscordClient;
 use DI\ContainerBuilder;
+use GuzzleHttp\Client;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
@@ -22,9 +25,16 @@ return function (ContainerBuilder $containerBuilder) {
             $logger->pushProcessor($processor);
 
             $handler = new StreamHandler($loggerSettings['path'], $loggerSettings['level']);
-            $logger->pushHandler($handler);
+            $formatter = new LineFormatter();
+            $formatter->includeStacktraces(true);
+            $logger->pushHandler($handler->setFormatter($formatter));
 
             return $logger;
         },
+        DiscordClient::class => function (ContainerInterface $c) {
+            $settings = $c->get(SettingsInterface::class);
+            $discord_webhook_url = $settings->get('discord')['webhook_url'];
+            return new DiscordClient(new Client(), $discord_webhook_url);
+        }
     ]);
 };
