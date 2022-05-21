@@ -1,0 +1,7 @@
+runtime: php74
+
+env_variables:
+  # each parameter is sample. Please edit these.
+  DISCORD_WEBHOOK_URL: https://discord.com/api/webhooks/{id}/{secret}
+  PRODUCTION: true
+  ALLOW_ORIGIN_URL: example.example
