@@ -14,7 +14,7 @@
     }
   ],
   "require": {
-    "php": "^7.4",
+    "php": "^7.4 || ^8.0",
     "ext-json": "*",
     "guzzlehttp/guzzle": "^7.5",
     "monolog/monolog": "^2.8",
@@ -33,7 +33,10 @@
   },
   "config": {
     "process-timeout": 0,
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    }
   },
   "autoload": {
     "psr-4": {

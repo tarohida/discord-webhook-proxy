@@ -1,4 +1,4 @@
-FROM php:8.0-apache
+FROM php:8-apache
 
 MAINTAINER Taro Hida <sk8trou@gmail.com>
 
