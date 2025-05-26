@@ -13,11 +13,11 @@ return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
         SettingsInterface::class => function () {
             if (
-                !isset($_ENV['DISCORD_WEBHOOK_URL'])
+                !getenv('DISCORD_WEBHOOK_URL')
             ) {
                 throw new RuntimeException('必須パラメタが設定されていません');
             }
-            $production = isset($_ENV['PRODUCTION']);
+            $production = getenv('PRODUCTION') !== false;
             return new Settings([
                 'displayErrorDetails' => $production, // Should be set to false in production
                 'logError' => true,
@@ -28,7 +28,7 @@ return function (ContainerBuilder $containerBuilder) {
                     'level' => Logger::DEBUG,
                 ],
                 'discord' => [
-                    'webhook_url' => $_ENV['DISCORD_WEBHOOK_URL']
+                    'webhook_url' => getenv('DISCORD_WEBHOOK_URL')
                 ]
             ]);
         }

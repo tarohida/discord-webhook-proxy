@@ -15,9 +15,8 @@ require __DIR__ . '/../vendor/autoload.php';
 // Instantiate PHP-DI ContainerBuilder
 $containerBuilder = new ContainerBuilder();
 
-$production = isset($_ENV['production']);
-if (!$production) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+if ((getenv('GAE_ENV') === false) && (getenv('PRODUCTION') === false)) {
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
     $dotenv->load();
 }
 
