@@ -20,7 +20,8 @@
     "monolog/monolog": "^2.8",
     "php-di/php-di": "^6.3",
     "slim/psr7": "^1.5",
-    "slim/slim": "^4.10"
+    "slim/slim": "^4.10",
+    "vlucas/phpdotenv": "^5.4"
   },
   "require-dev": {
     "jangregor/phpstan-prophecy": "^1.0.2",
@@ -28,8 +29,7 @@
     "phpstan/extension-installer": "^1.1.0",
     "phpstan/phpstan": "^1.12",
     "phpunit/phpunit": "^9.6.19",
-    "squizlabs/php_codesniffer": "^3.7",
-    "vlucas/phpdotenv": "^5.4"
+    "squizlabs/php_codesniffer": "^3.7"
   },
   "config": {
     "process-timeout": 0,
