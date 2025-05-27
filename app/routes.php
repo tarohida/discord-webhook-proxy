@@ -7,12 +7,17 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 
-return function (App $app) {
+return function (\Slim\App $app) {
     $app->post('/webhook/send', SendRequestToDiscordWebhookAction::class);
 
     $app->options('/{routes:.*}', function (Request $request, Response $response) {
         // CORS Pre-Flight OPTIONS Request Handler
         return $response;
+    });
+
+    // Handle favicon.ico requests to return 404 without error
+    $app->get('/favicon.ico', function (Request $request, Response $response) {
+        return $response->withStatus(404);
     });
 
     $app->add(function ($request, $handler) {
