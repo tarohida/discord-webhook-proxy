@@ -4,4 +4,6 @@ env_variables:
   # each parameter is sample. Please edit these.
   DISCORD_WEBHOOK_URL: https://discordapp.com/api/webhooks/{id}/{token}
   ALLOW_ORIGIN_URL: ""
-  automatic_scaling.max_instances: 1
+
+automatic_scaling:
+  max_instances: 1
