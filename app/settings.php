@@ -15,9 +15,9 @@ return function (ContainerBuilder $containerBuilder) {
             if (
                 !getenv('DISCORD_WEBHOOK_URL')
             ) {
-                throw new RuntimeException('必須パラメタが設定されていません');
+                throw new RuntimeException('必須パラメタが設定されていません' . print_r(getenv(), true));
             }
-            $production = getenv('PRODUCTION') !== false;
+            $production = getenv('PRODUCTION') === 'true';
             return new Settings([
                 'displayErrorDetails' => $production, // Should be set to false in production
                 'logError' => true,

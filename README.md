@@ -74,3 +74,9 @@ cp app.sample.yaml app.yaml
 ```bash
 gcloud app deploy
 ```
+
+テスト実行
+
+```
+curl -X POST https://{url}/webhook/send   -H "Content-Type: application/json"   -d '{"content": "hey yo"}'
+```

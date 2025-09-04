@@ -15,10 +15,8 @@ require __DIR__ . '/../vendor/autoload.php';
 // Instantiate PHP-DI ContainerBuilder
 $containerBuilder = new ContainerBuilder();
 
-if ((getenv('GAE_ENV') === false) && (getenv('PRODUCTION') === false)) {
-    $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
-    $dotenv->load();
-}
+// Environment variables are loaded by dev-start.sh script in development
+// and set directly in production (GAE)
 
 // Set up settings
 $settings = require __DIR__ . '/../app/settings.php';
